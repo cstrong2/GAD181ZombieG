@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GunSystem : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class GunSystem : MonoBehaviour
 
     //Graphics
     public GameObject muzzleFlash, bulletHoleGraphic;
+    public TextMeshProUGUI text;
 
 
 
@@ -34,6 +36,9 @@ public class GunSystem : MonoBehaviour
     private void Update()
     {
         MyInput();
+
+        //Set Text
+        text.SetText(bulletsLeft + " / " + magazineSize);
     }
 
     private void MyInput()
@@ -74,7 +79,7 @@ public class GunSystem : MonoBehaviour
 
         //Graphics
         Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-        Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
+        Instantiate(muzzleFlash, attackPoint.position, Quaternion.Euler(0,180,0));
 
         bulletsLeft--;
         bulletsShot--;
