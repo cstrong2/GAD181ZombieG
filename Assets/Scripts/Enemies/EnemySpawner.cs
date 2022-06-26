@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject theEnemy;
-    public int xPos;
-    public int zPos;
-    public int enemyCount;
+    public GameObject[] spawners;
+    public GameObject enemy;
+    int i;
 
     private void Start()
     {
-        StartCoroutine(EnemyDrop());
+        spawners = new GameObject[3];
+
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            spawners[i] = transform.GetChild(i).gameObject;
+        }
     }
 
-    IEnumerator EnemyDrop()
+    private void Update()
     {
-        while(enemyCount < 2)
+        if (Time.time> i)
         {
-            xPos = Random.Range(1, 20);
-            zPos = Random.Range(1, 56);
-            Instantiate(theEnemy, new Vector3(xPos, 1, zPos), Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
-            enemyCount += 1;
+            i += 5;
+            SpawnEnemy();
         }
+    }
+
+    private void SpawnEnemy()
+    {
+        int spawnerID = Random.Range(0, spawners.Length);
+        Instantiate(enemy, spawners[spawnerID].transform.position, spawners[spawnerID].transform.rotation);
     }
 }
