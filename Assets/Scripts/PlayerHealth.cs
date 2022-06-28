@@ -12,18 +12,29 @@ public class PlayerHealth : MonoBehaviour
     public Behaviour gameOverCanvas;
     public GameObject enemyPrefab;
 
+    public GameObject score;
+    private TextMesh scoreText;
+
+    private void Start()
+    {
+        scoreText = score.GetComponent<TextMesh>();
+        PlayerPrefs.SetString("currentScore", "0");
+    }
 
     private void Update()
     {
         if (healthAmount <= 0)
         {
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(2);
+            PlayerPrefs.SetString("currentScore", scoreText.text);
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            TakeDamage(100);
-        }
+    private void OnTriggerEnter(Collider other)
+    {
+        TakeDamage(100);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void TakeDamage(float Damage)

@@ -1,9 +1,10 @@
-
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
     public float health = 20f;
+    PlayerHealth damage;
 
     public void TakeDamage(float amount)
     {
@@ -18,5 +19,13 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+
+    private void OnTriggerEnter(GameObject other)
+    {
+        if (gameObject.tag == "Player")
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 }
