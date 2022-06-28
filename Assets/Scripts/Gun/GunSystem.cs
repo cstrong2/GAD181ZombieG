@@ -11,6 +11,7 @@ public class GunSystem : MonoBehaviour
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
+    public AudioSource shootingSound;
 
     //bools
     bool shooting, readyToShoot, reloading;
@@ -25,7 +26,10 @@ public class GunSystem : MonoBehaviour
     public GameObject muzzleFlash, bulletHoleGraphic;
     public TextMeshProUGUI text;
 
-
+    private void Start()
+    {
+        shootingSound = GetComponent<AudioSource>();
+    }
 
     private void Awake()
     {
@@ -44,6 +48,7 @@ public class GunSystem : MonoBehaviour
     private void MyInput()
     {
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
+
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
         if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
